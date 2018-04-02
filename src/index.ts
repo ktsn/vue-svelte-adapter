@@ -29,6 +29,12 @@ export function toVue<Props>(
         data: this.$props
       }))
 
+      const originalFire = instance.fire
+      instance.fire = (eventName: string, data: any): void => {
+        this.$emit(eventName, data)
+        return originalFire.call(instance, eventName, data)
+      }
+
       const propKeys = Object.keys(this.$props || {})
       let prevProps = copy(this.$props || {})
 

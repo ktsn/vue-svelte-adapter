@@ -4,6 +4,7 @@ import { toVue } from '../src/index'
 import Basic from './fixtures/Basic.html'
 import Data from './fixtures/Data.html'
 import ObjectData from './fixtures/ObjectData.html'
+import Event from './fixtures/Event.html'
 
 describe('Vue Svelte Adapter', () => {
   it('renders template', () => {
@@ -71,5 +72,12 @@ describe('Vue Svelte Adapter', () => {
     expect(wrapper.text()).toBe('Name: Foo')
     wrapper.vm.user.name = 'Bar'
     expect(wrapper.text()).toBe('Name: Bar')
+  })
+
+  it('observes component events', () => {
+    const EventVue = toVue(Event)
+    const wrapper = mount(EventVue)
+    wrapper.find('button').trigger('click')
+    expect(wrapper.emitted('test')[0]).toEqual(['clicked'])
   })
 })
