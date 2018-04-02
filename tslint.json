@@ -2,5 +2,8 @@
   "extends": [
     "tslint-config-ktsn",
     "tslint-config-prettier"
-  ]
+  ],
+  "rules": {
+    "no-extra-semi": null
+  }
 }

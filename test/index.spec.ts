@@ -1,8 +1,11 @@
-import index from '../src/index'
+import { mount } from '@vue/test-utils'
+import { toVue } from '../src/index'
+import Basic from './fixtures/Basic.html'
 
-describe('Entry point', () => {
-  it('should provide module', () => {
-    const actual = index
-    expect(actual).toEqual({})
+describe('Vue Svelte Adapter', () => {
+  it('renders template', () => {
+    const BasicVue = toVue(Basic)
+    const wrapper = mount(BasicVue)
+    expect(wrapper.html()).toMatchSnapshot()
   })
 })

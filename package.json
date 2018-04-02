@@ -28,7 +28,8 @@
   },
   "jest": {
     "transform": {
-      "^.+\\.ts$": "ts-jest"
+      "^.+\\.ts$": "ts-jest",
+      "^.+\\.html$": "svelte-jest"
     },
     "testRegex": "/test/.+\\.spec\\.(js|ts)$",
     "moduleFileExtensions": [
@@ -44,13 +45,16 @@
   },
   "devDependencies": {
     "@types/jest": "^22.2.0",
+    "@vue/test-utils": "^1.0.0-beta.13",
     "jest": "^22.4.2",
     "prettier": "1.11.0",
+    "svelte-jest": "^0.1.0",
     "ts-jest": "^22.4.1",
     "tslint": "^5.9.1",
     "tslint-config-ktsn": "^2.1.0",
     "tslint-config-prettier": "^1.9.0",
-    "typescript": "^2.7.2",
-    "vue": "^2.5.16"
+    "typescript": "^2.8.1",
+    "vue": "^2.5.16",
+    "vue-template-compiler": "^2.5.16"
   }
 }
