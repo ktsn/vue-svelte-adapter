@@ -29,35 +29,11 @@ export function toVue<Props>(
         data: this.$props
       }))
 
-      const originalFire = instance.fire
-      instance.fire = (eventName: string, data: any): void => {
-        this.$emit(eventName, data)
-        return originalFire.call(instance, eventName, data)
-      }
+      patchSvelteInstance(this, instance)
 
-      const propKeys = Object.keys(this.$props || {})
-      let prevProps = copy(this.$props || {})
-
-      if (propKeys.length > 0) {
-        this.$watch(() => {
-          const target: Record<string, any> = {}
-
-          propKeys.forEach(key => {
-            const value = this.$props[key]
-            if (
-              prevProps[key] !== value ||
-              (value !== null && typeof value === 'object')
-            ) {
-              target[key] = value
-            }
-          })
-
-          if (Object.keys(target).length > 0) {
-            instance.set(target)
-            prevProps = copy(this.$props || {})
-          }
-        }, noop)
-      }
+      observePropsDiff(this, diff => {
+        instance.set(diff)
+      })
     },
 
     beforeDestroy() {
@@ -73,6 +49,44 @@ export function toVue<Props>(
 
 function noop(): void {
   // do nothing
+}
+
+function observePropsDiff(
+  vm: Vue,
+  cb: (diff: Record<string, any>) => void
+): void {
+  const props = vm.$props || {}
+  const propKeys = Object.keys(props)
+  let prevProps = copy(props)
+
+  if (propKeys.length === 0) return
+
+  vm.$watch(() => {
+    const diff: Record<string, any> = {}
+
+    propKeys.forEach(key => {
+      const value = vm.$props[key]
+      if (
+        prevProps[key] !== value ||
+        (value !== null && typeof value === 'object')
+      ) {
+        diff[key] = value
+      }
+    })
+
+    if (Object.keys(diff).length > 0) {
+      cb(diff)
+      prevProps = copy(vm.$props || {})
+    }
+  }, noop)
+}
+
+function patchSvelteInstance(vm: Vue, svelte: any): void {
+  const originalFire = svelte.fire
+  svelte.fire = (eventName: string, data: any): void => {
+    vm.$emit(eventName, data)
+    return originalFire.call(svelte, eventName, data)
+  }
 }
 
 function copy<T extends object>(value: T): T {
