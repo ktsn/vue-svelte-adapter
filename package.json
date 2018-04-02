@@ -1,6 +1,6 @@
 {
   "name": "vue-svelte-adapter",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "author": "katashin",
   "description": "Using Svelte components in Vue.js",
   "keywords": [
