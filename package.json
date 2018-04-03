@@ -12,8 +12,10 @@
     "converter"
   ],
   "license": "MIT",
-  "main": "lib/index.js",
-  "typings": "lib/index.d.ts",
+  "main": "dist/vue-svelte-adapter.cjs.js",
+  "module": "dist/vue-svelte-adapter.es.js",
+  "unpkg": "dist/vue-svelte-adapter.js",
+  "typings": "dist/index.d.ts",
   "files": [
     "lib"
   ],
@@ -25,8 +27,8 @@
   },
   "scripts": {
     "prepublishOnly": "npm run clean && npm run test && npm run build",
-    "clean": "rm -rf lib",
-    "build": "tsc -p src",
+    "clean": "rm -rf dist",
+    "build": "bili --format cjs,es,umd,umd-min",
     "dev": "jest --watch",
     "lint": "tslint -p . && prettier --list-different \"{src,scripts,test}/**/*.{js,ts}\"",
     "format": "prettier --write \"{src,scripts,test}/**/*.{js,ts}\"",
@@ -53,8 +55,10 @@
   "devDependencies": {
     "@types/jest": "^22.2.0",
     "@vue/test-utils": "^1.0.0-beta.13",
+    "bili": "^3.0.15",
     "jest": "^22.4.2",
     "prettier": "1.11.0",
+    "rollup-plugin-typescript2": "^0.12.0",
     "svelte-jest": "^0.1.0",
     "ts-jest": "^22.4.1",
     "tslint": "^5.9.1",
