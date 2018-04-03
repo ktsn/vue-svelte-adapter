@@ -17,7 +17,7 @@
   "unpkg": "dist/vue-svelte-adapter.js",
   "typings": "dist/index.d.ts",
   "files": [
-    "lib"
+    "dist"
   ],
   "homepage": "https://github.com/ktsn/vue-svelte-adapter",
   "bugs": "https://github.com/ktsn/vue-svelte-adapter/issues",
