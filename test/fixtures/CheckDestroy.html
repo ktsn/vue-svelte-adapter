@@ -1,0 +1,15 @@
+<h1>Check Destroy</h1>
+
+<script>
+  export default {
+    setup(Ctor) {
+      Ctor.registerSpy = function (spy) {
+        Ctor.spy = spy
+      }
+    },
+
+    ondestroy() {
+      this.constructor.spy()
+    }
+  }
+</script>

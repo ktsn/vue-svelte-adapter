@@ -5,6 +5,7 @@ import Basic from './fixtures/Basic.html'
 import Data from './fixtures/Data.html'
 import ObjectData from './fixtures/ObjectData.html'
 import Event from './fixtures/Event.html'
+import CheckDestroy from './fixtures/CheckDestroy.html'
 
 describe('Vue Svelte Adapter', () => {
   it('renders template', () => {
@@ -79,5 +80,17 @@ describe('Vue Svelte Adapter', () => {
     const wrapper = mount(EventVue)
     wrapper.find('button').trigger('click')
     expect(wrapper.emitted('test')[0]).toEqual(['clicked'])
+  })
+
+  it('teardowns Svelte component', () => {
+    const spy = jest.fn()
+    CheckDestroy.registerSpy(spy)
+
+    const CheckDestroyVue = toVue(CheckDestroy)
+    const wrapper = mount(CheckDestroyVue)
+
+    expect(spy).not.toHaveBeenCalled()
+    wrapper.destroy()
+    expect(spy).toHaveBeenCalled()
   })
 })
