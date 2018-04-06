@@ -93,4 +93,11 @@ describe('Vue Svelte Adapter', () => {
     wrapper.destroy()
     expect(spy).toHaveBeenCalled()
   })
+
+  it('does not detach DOM nodes on destroy', () => {
+    const BasicVue = toVue(Basic)
+    const wrapper = mount(BasicVue)
+    wrapper.destroy()
+    expect(wrapper.html()).toMatchSnapshot()
+  })
 })

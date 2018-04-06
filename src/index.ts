@@ -38,7 +38,7 @@ export function toVue<Props>(
 
     beforeDestroy() {
       const { instance } = this as any
-      instance.destroy()
+      instance.destroy(false)
     },
 
     render(h) {
