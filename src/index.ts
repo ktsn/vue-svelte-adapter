@@ -36,7 +36,7 @@ export function toVue<Props>(
       })
     },
 
-    destroyed() {
+    beforeDestroy() {
       const { instance } = this as any
       instance.destroy()
     },
