@@ -38,7 +38,17 @@ export function toVue<Props>(
 
     beforeDestroy() {
       const { instance } = this as any
-      instance.destroy(false)
+
+      // We need to clone fresh elements and add them
+      // because Svelte will remove their elements when destroyed.
+      const root = this.$el
+      const fragment = document.createDocumentFragment()
+      Array.prototype.forEach.call(root.childNodes, (child: Node) => {
+        fragment.appendChild(child.cloneNode(true))
+      })
+      root.appendChild(fragment)
+
+      instance.destroy()
     },
 
     render(h) {
